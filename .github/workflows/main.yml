@@ -21,7 +21,7 @@ jobs:
 
     - name: Clone SAMPGDK
       run: |
-        git clone https://github.com/Zeex/sampgdk.git
+        git clone https://github.com/samp-forks/sampgdk.git
         cd sampgdk
         mkdir build
         cd build
