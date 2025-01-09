@@ -29,13 +29,13 @@ jobs:
 
     - name: Download SAMPSDK
       run: |
-        git clone https://github.com/Zeex/samp-plugin-sdk.git samp-sdk
+        git clone https://github.com/udan11/samp-plugin-sdk.git samp-sdk
         mkdir -p /usr/local/samp-sdk
         cp -r samp-sdk/include /usr/local/samp-sdk/include
 
     - name: Clone SAMPGDK
       run: |
-        git clone https://github.com/Zeex/sampgdk.git
+        git clone https://github.com/samp-forks/sampgdk.git
         cd sampgdk
         mkdir build
         cd build
