@@ -1,3 +1,6 @@
+env:
+  GITHUB_WORKSPACE: "/usr/local/"
+
 name: Build SAMPHP
 
 on:
@@ -30,8 +33,8 @@ jobs:
     - name: Download SAMPSDK
       run: |
         git clone https://github.com/udan11/samp-plugin-sdk.git samp-sdk
-        mkdir -p /usr/local/samp-sdk
-        cp -r samp-sdk/include /usr/local/samp-sdk/include
+        mkdir -p $GITHUB_WORKSPACE/samp-sdk
+        cp -r samp-sdk/include $GITHUB_WORKSPACE/samp-sdk/include
 
     - name: Clone SAMPGDK
       run: |
@@ -39,13 +42,13 @@ jobs:
         cd sampgdk
         mkdir build
         cd build
-        cmake -DSAMPSDK_DIR=/usr/local/samp-sdk ..
+        cmake -DSAMPSDK_DIR=$GITHUB_WORKSPACE/samp-sdk ..
         make
 
     - name: Build SAMPHP
       run: |
         chmod +x install_libphp5.sh
-        sudo ./install_libphp5.sh
+        ./install_libphp5.sh $GITHUB_WORKSPACE/samp-sdk
         chmod +x build.sh
         ./build.sh
 
