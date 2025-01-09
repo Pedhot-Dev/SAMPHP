@@ -1,0 +1,44 @@
+name: Build SAMPHP
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential gcc-multilib g++-multilib libxml2-dev git
+
+    - name: Clone SAMPGDK
+      run: |
+        git clone https://github.com/Zeex/sampgdk.git
+        cd sampgdk
+        mkdir build
+        cd build
+        cmake -DMULTIPLATFORM=ON -DBUILD_STATIC_LIBS=ON ..
+        make
+        sudo make install
+        cd ../../
+
+    - name: Build SAMPHP
+      run: |
+        chmod +x install_libphp5.sh
+        sudo ./install_libphp5.sh
+        chmod +x build.sh
+        ./build.sh
+
+    - name: Archive Build
+      uses: actions/upload-artifact@v3
+      with:
+        name: samphp-plugin
+        path: samphp
